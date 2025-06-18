@@ -10,6 +10,7 @@ import { Videoaulas } from '@/components/Videoaulas';
 import { Anotacoes } from '@/components/Anotacoes';
 import { Explorar } from '@/components/Explorar';
 import { AssistenteIA } from '@/components/AssistenteIA';
+import { AppPremium } from '@/components/AppPremium';
 import { Suporte } from '@/components/Suporte';
 import { useEffect, useState } from 'react';
 
