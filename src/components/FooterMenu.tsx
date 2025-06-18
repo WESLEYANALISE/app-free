@@ -1,4 +1,5 @@
-import { Home, BookOpen, GraduationCap, Briefcase, Star, Download, Bot, Crown } from 'lucide-react';
+
+import { Home, BookOpen, GraduationCap, Briefcase, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
@@ -19,12 +20,10 @@ export const FooterMenu = ({ isVisible = false }: FooterMenuProps) => {
 
   const menuItems = [
     { icon: Home, title: 'Início', function: 'Dashboard' },
-    { icon: BookOpen, title: 'Downloads', function: 'Downloads' },
+    { icon: BookOpen, title: 'Explorar', function: 'Explorar' },
     { icon: GraduationCap, title: 'Videoaulas', function: 'Videoaulas' },
-    { icon: Briefcase, title: 'Plataforma Desktop', function: 'Plataforma Desktop' },
+    { icon: Briefcase, title: 'Plataforma', function: 'Plataforma Desktop' },
     { icon: Star, title: 'Favoritos', function: 'Favoritos' },
-    { icon: Bot, title: 'Assistente IA', function: 'Assistente IA' },
-    { icon: Crown, title: 'App Premium', function: 'App Premium' },
   ];
 
   const handleClick = (menuItem: (typeof menuItems)[0]) => {
