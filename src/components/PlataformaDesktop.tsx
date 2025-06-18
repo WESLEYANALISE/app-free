@@ -7,19 +7,23 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, User, Mail, CheckCircle, Download, Zap, Shield } from 'lucide-react';
+import { Loader2, User, Mail, CheckCircle, Download, Zap, Shield, Crown, Lock } from 'lucide-react';
 import { DesktopPlatformCarousel } from '@/components/DesktopPlatformCarousel';
+import { useNavigation } from '@/context/NavigationContext';
+
 const formSchema = z.object({
   nome: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
   email: z.string().email('Digite um email válido')
 });
+
 type FormData = z.infer<typeof formSchema>;
+
 export const PlataformaDesktop = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+  const { setCurrentFunction } = useNavigation();
+
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,6 +31,11 @@ export const PlataformaDesktop = () => {
       email: ''
     }
   });
+
+  const handlePremiumUpgrade = () => {
+    setCurrentFunction('App Premium');
+  };
+
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     const scriptURL = 'https://sheetdb.io/api/v1/29eaz3rsm73qu';
@@ -73,6 +82,7 @@ export const PlataformaDesktop = () => {
       setIsLoading(false);
     }
   };
+
   if (isSuccess) {
     return <div className="max-w-4xl mx-auto p-4 sm:p-6 md:p-8">
         <Card className="text-center border-0 bg-card/50 backdrop-blur-sm shadow-2xl">
@@ -115,7 +125,9 @@ export const PlataformaDesktop = () => {
         </Card>
       </div>;
   }
-  return <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-8 py-[21px]">
+
+  return (
+    <div className="max-w-6xl mx-auto p-4 sm:p-6 md:p-8 py-[21px]">
       {/* Carrossel de imagens da plataforma */}
       <div className="mb-12">
         <DesktopPlatformCarousel />
@@ -123,96 +135,180 @@ export const PlataformaDesktop = () => {
 
       {/* Seção de benefícios */}
       <div className="grid md:grid-cols-3 gap-6 mb-12">
-        
-
-        <div style={{
-        animationDelay: '0.2s'
-      }} className="text-center p-6 bg-card/30 backdrop-blur-sm rounded-2xl border border-border animate-fade-in-up px-[13px] py-0">
+        <div style={{ animationDelay: '0.2s' }} className="text-center p-6 bg-card/30 backdrop-blur-sm rounded-2xl border border-border animate-fade-in-up px-[13px] py-0">
           <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Zap className="w-8 h-8 text-white" />
           </div>
           <h3 className="font-bold text-lg mb-2 text-purple-400">Acesso Imediato</h3>
           <p className="text-sm text-muted-foreground">Sem espera! Comece a usar assim que fizer o download</p>
         </div>
-
-        
       </div>
 
-      {/* Formulário de cadastro */}
-      <Card className="border-0 bg-card/50 backdrop-blur-sm shadow-2xl">
+      {/* Premium Notice Card */}
+      <Card className="border-yellow-500/30 bg-gradient-to-r from-yellow-50/10 to-orange-50/10 mb-8">
+        <CardHeader className="text-center">
+          <div className="mx-auto w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mb-4">
+            <Crown className="h-8 w-8 text-yellow-500" />
+          </div>
+          <CardTitle className="text-2xl text-yellow-600 flex items-center justify-center gap-2">
+            <Lock className="h-6 w-6" />
+            Acesso Premium Necessário
+          </CardTitle>
+          <CardDescription className="text-lg">
+            A plataforma desktop completa está disponível apenas para usuários Premium
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center space-y-6">
+          <div className="bg-card/70 rounded-lg p-6 border border-border">
+            <h3 className="font-bold text-lg mb-4 text-yellow-400">✨ Vantagens Premium:</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span className="text-sm">Plataforma Desktop Completa</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span className="text-sm">Sem Anúncios</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span className="text-sm">Assistente IA Premium</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span className="text-sm">Downloads Ilimitados</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span className="text-sm">Suporte Prioritário</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-4 h-4 text-green-500" />
+                <span className="text-sm">Acesso Vitalício</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="text-center">
+              <div className="text-3xl font-bold text-yellow-600 mb-2">
+                R$ 39,99
+              </div>
+              <div className="text-lg text-green-400 font-semibold">
+                🎉 Pagamento Único - Acesso Vitalício
+              </div>
+              <p className="text-sm text-muted-foreground mt-2">
+                Sem mensalidades! Pague uma vez e tenha acesso para sempre
+              </p>
+            </div>
+
+            <Button 
+              onClick={handlePremiumUpgrade}
+              className="w-full h-16 text-lg font-bold bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 hover:from-yellow-600 hover:via-orange-600 hover:to-yellow-700 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-2xl"
+            >
+              <Crown className="w-6 h-6 mr-3" />
+              Upgrade para Premium - R$ 39,99
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Formulário desabilitado */}
+      <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-2xl opacity-60">
         <CardHeader className="text-center pb-6 py-[12px]">
-          <CardTitle className="gradient-text-legal text-3xl sm:text-4xl mb-4">
+          <CardTitle className="gradient-text-legal text-3xl sm:text-4xl mb-4 opacity-50">
             Acesse a Versão Desktop Completa
           </CardTitle>
-          <CardDescription className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-muted-foreground">
+          <CardDescription className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-muted-foreground opacity-50">
             Preencha os dados abaixo e receba o <strong className="text-primary">link da plataforma desktop</strong> diretamente no seu email. 
             Acesso completo a todas as funcionalidades profissionais!
           </CardDescription>
           
           {/* Banner explicativo */}
-          <div className="mt-6 p-4 bg-primary/10 backdrop-blur-sm rounded-xl border border-primary/20">
-            <p className="text-sm font-medium text-primary flex items-center justify-center gap-2">
-              <Mail className="w-4 h-4" />
-              Você receberá um email com o link de download da plataforma
+          <div className="mt-6 p-4 bg-red-500/10 backdrop-blur-sm rounded-xl border border-red-500/20">
+            <p className="text-sm font-medium text-red-400 flex items-center justify-center gap-2">
+              <Lock className="w-4 h-4" />
+              Disponível apenas para usuários Premium
             </p>
           </div>
         </CardHeader>
         
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form className="space-y-8">
               <div className="grid sm:grid-cols-2 gap-6">
-                <FormField control={form.control} name="nome" render={({
-                field
-              }) => <FormItem>
-                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base">
+                <FormField 
+                  control={form.control} 
+                  name="nome" 
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base opacity-50">
                         <User className="w-5 h-5 text-primary" />
                         Nome Completo
                       </FormLabel>
                       <FormControl>
-                        <Input placeholder="Digite seu nome completo" {...field} className="h-14 text-base bg-background/50 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" disabled={isLoading} />
+                        <Input 
+                          placeholder="Digite seu nome completo" 
+                          {...field} 
+                          className="h-14 text-base bg-background/30 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" 
+                          disabled={true}
+                        />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>} />
+                    </FormItem>
+                  )} 
+                />
 
-                <FormField control={form.control} name="email" render={({
-                field
-              }) => <FormItem>
-                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base">
+                <FormField 
+                  control={form.control} 
+                  name="email" 
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base opacity-50">
                         <Mail className="w-5 h-5 text-primary" />
                         E-mail para receber o link
                       </FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="Digite seu melhor e-mail" {...field} className="h-14 text-base bg-background/50 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" disabled={isLoading} />
+                        <Input 
+                          type="email" 
+                          placeholder="Digite seu melhor e-mail" 
+                          {...field} 
+                          className="h-14 text-base bg-background/30 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" 
+                          disabled={true}
+                        />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>} />
+                    </FormItem>
+                  )} 
+                />
               </div>
 
-              <Button type="submit" className="w-full h-16 text-lg font-bold bg-gradient-to-r from-primary via-accent-legal to-primary hover:from-primary/90 hover:via-accent-legal/90 hover:to-primary/90 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-2xl" disabled={isLoading}>
-                {isLoading ? <>
-                    <Loader2 className="w-6 h-6 mr-3 animate-spin" />
-                    Enviando para seu email...
-                  </> : <>
-                    <Download className="w-6 h-6 mr-3" />
-                    Receber Link de Download por Email
-                  </>}
-              </Button>
+              <div className="relative">
+                <Button 
+                  type="button" 
+                  className="w-full h-16 text-lg font-bold bg-gray-500/50 cursor-not-allowed opacity-50" 
+                  disabled={true}
+                >
+                  <Lock className="w-6 h-6 mr-3" />
+                  Premium Necessário para Download
+                </Button>
+                <div className="absolute inset-0 bg-black/20 rounded-md pointer-events-none" />
+              </div>
             </form>
           </Form>
 
-          <div className="mt-8 p-6 bg-muted/20 backdrop-blur-sm rounded-xl border border-border">
+          <div className="mt-8 p-6 bg-red-500/10 backdrop-blur-sm rounded-xl border border-red-500/20">
             <div className="text-center space-y-2">
-              <p className="text-sm text-muted-foreground">
-                ✅ Ao se cadastrar, você receberá o link de acesso por email
+              <p className="text-sm text-red-400 font-medium">
+                🔒 Funcionalidade Premium
               </p>
-              
               <p className="text-sm text-muted-foreground">
-                📧 Verifique também sua caixa de spam
+                Upgrade para Premium e tenha acesso à plataforma desktop completa
               </p>
             </div>
           </div>
         </CardContent>
       </Card>
-    </div>;
+    </div>
+  );
 };
