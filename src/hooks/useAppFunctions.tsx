@@ -20,7 +20,7 @@ export const useAppFunctions = () => {
         console.log('useAppFunctions - Iniciando busca das funções...');
         
         const { data, error } = await supabase
-          .from('APP')
+          .from('APP_duplicate')
           .select('id, funcao, descricao, link')
           .order('id');
 
