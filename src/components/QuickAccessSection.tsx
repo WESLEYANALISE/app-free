@@ -1,254 +1,100 @@
 
-import { useRef } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useNavigation } from '@/context/NavigationContext';
-import { useAppFunctions } from '@/hooks/useAppFunctions';
-import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 import { 
-  ChevronLeft,
-  ChevronRight,
-  GitBranch,
-  Scale,
-  Bot,
-  Headphones,
-  Library,
-  Monitor,
-  Play,
-  Folder,
-  Newspaper,
-  Film,
-  Brain,
-  BookOpen,
-  FileText,
-  Search,
+  BookOpen, 
+  Video, 
+  Download, 
   GraduationCap,
-  Calendar,
-  Clock,
-  Award,
-  Target,
-  Bookmark,
-  Download,
-  Upload,
-  Share,
-  Heart,
-  Star,
-  Zap,
-  Shield,
-  Globe,
-  Camera,
-  Music,
-  Video,
-  Image,
-  File,
-  Archive,
-  Code,
-  Database,
-  Hammer,
-  Edit
+  Crown,
+  Sparkles
 } from 'lucide-react';
-
-// Array expandido de ícones únicos
-const availableIcons = [
-  Scale, Bot, Library, Headphones, GitBranch, Monitor, Play, Folder, 
-  Newspaper, Film, Brain, BookOpen, FileText, Search, GraduationCap, 
-  Calendar, Clock, Award, Target, Bookmark, Download, Upload, Share, 
-  Heart, Star, Zap, Shield, Globe, Camera, Music, Video, Image, 
-  File, Archive, Code, Database, Hammer, Edit
-];
-
-// Get first 8 functions in the specified order
-const getMostUsedFunctions = (functions: any[], isDesktop: boolean) => {
-  const orderedFunctionNames = [
-    'Vade Mecum',
-    'Assistente IA',
-    'Downloads', 
-    'Acesso Desktop',
-    'Audio-aulas',
-    'Biblioteca juridica',
-    'resumos jurídicos',
-    'Editar'
-  ];
-  
-  const orderedFunctions: any[] = [];
-  
-  // Add functions in the specified order
-  orderedFunctionNames.forEach(name => {
-    // Skip "Acesso Desktop" on desktop version
-    if (isDesktop && name === 'Acesso Desktop') {
-      return;
-    }
-    
-    // Handle "Editar" as a special case
-    if (name === 'Editar') {
-      orderedFunctions.push({
-        id: 'editar-custom',
-        funcao: 'Editar Favoritos',
-        isCustom: true
-      });
-      return;
-    }
-    
-    const func = functions.find(f => 
-      f.funcao.toLowerCase().includes(name.toLowerCase()) ||
-      (name === 'Assistente IA' && f.funcao.toLowerCase().includes('assistente') && f.funcao.toLowerCase().includes('ia')) ||
-      (name === 'Acesso Desktop' && f.funcao.toLowerCase().includes('plataforma') && f.funcao.toLowerCase().includes('desktop')) ||
-      (name === 'Audio-aulas' && (f.funcao.toLowerCase().includes('audio') || f.funcao.toLowerCase().includes('áudio'))) ||
-      (name === 'Biblioteca juridica' && f.funcao.toLowerCase().includes('biblioteca')) ||
-      (name === 'resumos jurídicos' && f.funcao.toLowerCase().includes('resumo')) ||
-      (name === 'video aulas' && f.funcao.toLowerCase().includes('video'))
-    );
-    if (func && !orderedFunctions.includes(func)) {
-      orderedFunctions.push(func);
-    }
-  });
-  
-  return orderedFunctions.slice(0, 8);
-};
-
-const getColorForIndex = (index: number) => {
-  const colors = [
-    'gradient-legal',     // Gold for legal content
-    'gradient-ai',        // Cyan for AI/tech
-    'gradient-study',     // Blue for study materials
-    'gradient-media',     // Purple for media content
-    'gradient-docs',      // Green for documents
-    'gradient-legal',     // Back to gold
-    'gradient-ai',        // Cyan
-    'gradient-study'      // Blue
-  ];
-  return colors[index % colors.length];
-};
-
-const getUniqueIconForFunction = (funcao: string, index: number) => {
-  const name = funcao.toLowerCase();
-  
-  // Mapeamento específico para funções principais na ordem especificada
-  if (name.includes('vade') || name.includes('mecum')) return Scale;
-  if (name.includes('assistente') && name.includes('ia')) return Bot;
-  if (name.includes('downloads') || name.includes('download')) return Download;
-  if (name.includes('plataforma') && name.includes('desktop')) return Monitor;
-  if (name.includes('audio') || name.includes('áudio')) return Headphones;
-  if (name.includes('biblioteca')) return Library;
-  if (name.includes('resumo') || name.includes('codigo') || name.includes('código')) return BookOpen;
-  if (name.includes('video') || name.includes('vídeo') || name.includes('aula')) return Play;
-  if (name.includes('editar') || name.includes('favoritos')) return Edit;
-  
-  // Se não encontrar correspondência específica, usa um ícone único baseado no índice
-  return availableIcons[index % availableIcons.length] || Scale;
-};
+import { useNavigation } from '@/context/NavigationContext';
 
 export const QuickAccessSection = () => {
   const { setCurrentFunction } = useNavigation();
-  const { functions, loading } = useAppFunctions();
-  const { isDesktop } = useDeviceDetection();
-  const scrollRef = useRef<HTMLDivElement>(null);
 
-  const handleQuickAccess = (funcao: string) => {
-    if (funcao === 'Editar Favoritos') {
-      // Implementar lógica de edição de favoritos no futuro
-      console.log('Abrir editor de favoritos');
-      return;
+  const quickAccessItems = [
+    {
+      icon: Video,
+      title: 'Videoaulas',
+      description: 'Aulas em vídeo atualizadas',
+      function: 'Videoaulas',
+      gradient: 'from-red-500 to-pink-500'
+    },
+    {
+      icon: BookOpen,
+      title: 'Explorar',
+      description: 'Descubra novos conteúdos',
+      function: 'Explorar',
+      gradient: 'from-blue-500 to-cyan-500'
+    },
+    {
+      icon: Download,
+      title: 'Downloads',
+      description: 'Materiais para download',
+      function: 'Downloads',
+      gradient: 'from-green-500 to-emerald-500'
+    },
+    {
+      icon: GraduationCap,
+      title: 'Plataforma',
+      description: 'Acesso completo desktop',
+      function: 'Plataforma Desktop',
+      gradient: 'from-purple-500 to-violet-500'
     }
-    setCurrentFunction(funcao);
-  };
-
-  const scrollLeft = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: -160, behavior: 'smooth' });
-    }
-  };
-
-  const scrollRight = () => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: 160, behavior: 'smooth' });
-    }
-  };
-
-  const quickAccessFunctions = getMostUsedFunctions(functions, isDesktop);
-
-  if (loading || quickAccessFunctions.length === 0) {
-    return null;
-  }
+  ];
 
   return (
-    <section className="py-6 sm:py-8 px-4 md:px-8 bg-gradient-to-b from-background/50 to-background animate-slide-up-legal">
+    <section className="px-3 sm:px-4 md:px-8 mb-6 sm:mb-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-4 sm:mb-6 animate-fade-in-legal">
-          <h2 className="text-lg sm:text-xl font-bold mb-2 gradient-text-legal animate-legal-text-glow">
-            Acesso Rápido
-          </h2>
-          <p className="text-muted-foreground text-sm max-w-lg mx-auto">
-            Funcionalidades mais utilizadas por profissionais do Direito
-          </p>
-        </div>
-
-        <div className="relative">
-          {/* Enhanced navigation buttons with legal styling and animations */}
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={scrollLeft}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 glass-effect-legal hover:bg-background border border-border/50 shadow-lg h-8 w-8 hidden sm:flex hover-glow-legal animate-legal-float"
-          >
-            <ChevronLeft className="h-4 w-4 animate-legal-icon-float" />
-          </Button>
-          
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={scrollRight}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 glass-effect-legal hover:bg-background border border-border/50 shadow-lg h-8 w-8 hidden sm:flex hover-glow-legal animate-legal-float"
-          >
-            <ChevronRight className="h-4 w-4 animate-legal-icon-float" />
-          </Button>
-
-          {/* Enhanced carousel container with legal animations */}
-          <div 
-            ref={scrollRef}
-            className="flex gap-3 sm:gap-4 overflow-x-auto scrollbar-hide py-2 px-2 sm:px-8"
-            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-          >
-            {quickAccessFunctions.map((func, index) => {
-              const colorClass = getColorForIndex(index);
-              const Icon = getUniqueIconForFunction(func.funcao, index);
-              
-              return (
-                <div
-                  key={func.id}
-                  className="flex-shrink-0 group cursor-pointer animate-bounce-in-legal"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                  onClick={() => handleQuickAccess(func.funcao)}
-                >
-                  <div className="flex flex-col items-center gap-2">
-                    {/* Enhanced circular button with legal styling and animations */}
-                    <div className={`
-                      w-14 h-14 sm:w-16 sm:h-16 rounded-full ${colorClass}
-                      flex items-center justify-center card-depth-2 hover-lift-legal
-                      group-hover:scale-110 transition-all duration-500 
-                      border border-white/20 group-hover:border-white/50
-                      relative overflow-hidden animate-legal-shimmer
-                    `}>
-                      {/* Enhanced background glow effect */}
-                      <div className="absolute inset-0 bg-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-legal-glow" />
-                      
-                      <Icon className="h-6 w-6 sm:h-7 sm:w-7 text-amber-400 drop-shadow-lg relative z-10 group-hover:animate-legal-icon-glow" />
-                      
-                      {/* Professional glow ring with animation */}
-                      <div className="absolute inset-0 rounded-full border-2 border-white/0 group-hover:border-white/40 transition-all duration-500 animate-legal-ring" />
-                      
-                      {/* Legal sparkle effect */}
-                      <div className="absolute top-1 right-1 w-2 h-2 bg-white/60 rounded-full opacity-0 group-hover:opacity-100 animate-legal-sparkle transition-opacity duration-500" />
-                    </div>
-                    
-                    {/* Enhanced label with legal typography and animations */}
-                    <span className="text-xs font-medium text-center text-foreground group-hover:text-primary transition-all duration-500 max-w-[4rem] sm:max-w-[5rem] line-clamp-2-fade group-hover:animate-legal-text-glow group-hover:scale-105">
-                      {func.funcao.split(' ').slice(0, 2).join(' ')}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+        <div className="flex items-center justify-between mb-6">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold gradient-text mb-2">
+              Acesso Rápido
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
+              Suas ferramentas jurídicas mais utilizadas
+            </p>
           </div>
+          
+          {/* Botão discreto Ser Premium */}
+          <Button
+            onClick={() => setCurrentFunction('App Premium')}
+            variant="outline"
+            size="sm"
+            className="group border-yellow-500/30 text-yellow-600 hover:bg-yellow-500/10 hover:border-yellow-500/50 transition-all duration-300"
+          >
+            <Crown className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+            <span className="hidden sm:inline">Ser Premium</span>
+            <span className="sm:hidden">Premium</span>
+            <Sparkles className="h-3 w-3 ml-1 opacity-70" />
+          </Button>
+        </div>
+        
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {quickAccessItems.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <Card 
+                key={index}
+                className="group cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 border-border/50 hover:border-primary/30 bg-card/80 backdrop-blur-sm"
+                onClick={() => setCurrentFunction(item.function)}
+              >
+                <CardContent className="p-4 sm:p-6 text-center">
+                  <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-r ${item.gradient} flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
+                    <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+                  </div>
+                  <h3 className="font-bold text-sm sm:text-base mb-1 sm:mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
+                    {item.description}
+                  </p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

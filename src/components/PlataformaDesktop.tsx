@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,10 +34,11 @@ export const PlataformaDesktop = () => {
     try {
       console.log('Dados originais do formulário:', data);
 
-      // Formato específico para SheetDB com colunas nomeadas
+      // Formato específico para SheetDB com colunas nomeadas incluindo status "Free"
       const sheetData = {
         Nome: data.nome,
-        email: data.email
+        email: data.email,
+        Status: 'Free'
       };
       console.log('Dados formatados para SheetDB:', sheetData);
       const response = await fetch(scriptURL, {
