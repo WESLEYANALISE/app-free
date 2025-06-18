@@ -1,3 +1,4 @@
+
 import { Scale, Search, Bell, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -18,7 +19,7 @@ export const MobileHeader = ({
             {/* Logo and Title */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg overflow-hidden">
-                <img src="https://imgur.com/M5Qu1m8.png" alt="Direito Premium" className="w-full h-full object-contain" />
+                <img src="https://imgur.com/AG6iOQz.png" alt="Direito Premium" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h1 className="text-lg font-bold gradient-text">Direito</h1>
@@ -28,8 +29,6 @@ export const MobileHeader = ({
             
             {/* Action Buttons */}
             <div className="flex items-center gap-2">
-              
-              
               
 
               <Button variant="ghost" size="icon" className="h-10 w-10 rounded-full hover:bg-primary/10 transition-all duration-300" onClick={() => setSidebarOpen(true)}>
