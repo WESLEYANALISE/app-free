@@ -61,6 +61,8 @@ export const AppFunction = () => {
       case 'Assistente IA Jurídica':
       case 'Assistente IA':
         return <AssistenteIA />;
+      case 'App Premium':
+        return <AppPremium />;
       case 'Suporte':
         return <Suporte />;
       case 'Dashboard':

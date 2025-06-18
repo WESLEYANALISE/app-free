@@ -1,24 +1,40 @@
 import { useState, useMemo } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
-import { BookOpen, Search, Filter, Grid, List } from 'lucide-react';
+import { BookOpen, Search, Filter, Grid, List, Crown, Lock, X, Download } from 'lucide-react';
 import { useDownloads } from '@/hooks/useDownloads';
 import { BookCard } from '@/components/BookCard';
 import { motion } from 'framer-motion';
+import { useDeviceDetection } from '@/hooks/useDeviceDetection';
+
 export const Downloads = () => {
-  const {
-    downloads,
-    loading,
-    error
-  } = useDownloads();
+  const { downloads, loading, error } = useDownloads();
+  const { isMobileOrTablet } = useDeviceDetection();
   const [selectedArea, setSelectedArea] = useState<string>('');
   const [selectedProfession, setProfession] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
+
+  const handleDownloadClick = () => {
+    setShowPremiumModal(true);
+  };
+
+  const handleAppDownload = () => {
+    const userAgent = navigator.userAgent;
+    const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
+    const isAndroid = /Android/.test(userAgent);
+
+    if (isIOS) {
+      window.open('https://apps.apple.com/us/app/direito-premium/id6451451647', '_blank');
+    } else if (isAndroid) {
+      window.open('https://play.google.com/store/apps/details?id=br.com.app.gpu2994564.gpub492f9e6db037057aaa93d7adfa9e3e0&pli=1', '_blank');
+    }
+  };
 
   // Cores únicas para cada área
   const areaColors = {
@@ -40,7 +56,7 @@ export const Downloads = () => {
     const colorMap = {
       'Direito Civil': '#3b82f6',
       'Direito Penal': '#ef4444',
-      'DireAdministrativo': '#10b981',
+      'Direito Administrativo': '#10b981',
       'Direito Constitucional': '#8b5cf6',
       'Direito Tributário': '#f59e0b',
       'Direito do Trabalho': '#f97316',
@@ -61,7 +77,12 @@ export const Downloads = () => {
   const getFilteredBooks = useMemo(() => {
     let filtered = downloads;
     if (searchQuery) {
-      filtered = filtered.filter(book => book.livro?.toLowerCase().includes(searchQuery.toLowerCase()) || book.area?.toLowerCase().includes(searchQuery.toLowerCase()) || book.profissao?.toLowerCase().includes(searchQuery.toLowerCase()) || book.sobre?.toLowerCase().includes(searchQuery.toLowerCase()));
+      filtered = filtered.filter(book => 
+        book.livro?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.area?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.profissao?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        book.sobre?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
     }
     return filtered;
   }, [downloads, searchQuery]);
@@ -76,244 +97,176 @@ export const Downloads = () => {
     return getFilteredBooks.filter(d => d.profissao && d.profissao.toLowerCase().includes(profession.toLowerCase()));
   };
   if (loading) {
-    return <div className="min-h-screen bg-background p-4">
+    return (
+      <div className="min-h-screen bg-background p-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-muted-foreground">Carregando downloads...</p>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
   if (error) {
-    return <div className="min-h-screen bg-background p-4">
+    return (
+      <div className="min-h-screen bg-background p-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
             <p className="text-red-500">Erro: {error}</p>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
-  return <div className="min-h-screen bg-background">
+  return (
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 px-[10px] py-[33px]">
-        {/* Header */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} className="mb-8">
+        {/* Premium Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          className="mb-8 text-center"
+        >
+          <div className="inline-flex items-center gap-2 bg-yellow-500/10 text-yellow-600 px-4 py-2 rounded-full text-sm font-medium mb-4">
+            <Crown className="w-4 h-4" />
+            <span>Funcionalidade Premium</span>
+          </div>
           <h1 className="font-bold gradient-text mb-3 text-center text-2xl">
-            Biblioteca de Downloads
+            Biblioteca de Downloads Premium
           </h1>
           <p className="text-muted-foreground text-base">
-            Descubra e baixe livros de estudos para concursos públicos organizados por área do direito e profissão
+            Acesso completo à biblioteca jurídica disponível apenas na versão premium
           </p>
         </motion.div>
 
-        {/* Controles */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 20
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        delay: 0.1
-      }} className="mb-8 space-y-4">
-          {/* Barra de Pesquisa e Controles de Visualização */}
-          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input placeholder="Pesquisar livros, áreas ou profissões..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" />
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <Button variant={viewMode === 'grid' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('grid')}>
-                <Grid className="h-4 w-4" />
-              </Button>
-              <Button variant={viewMode === 'list' ? 'default' : 'outline'} size="sm" onClick={() => setViewMode('list')}>
-                <List className="h-4 w-4" />
-              </Button>
-            </div>
+        {/* Premium Lock Overlay */}
+        <div className="relative">
+          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10 rounded-lg flex items-center justify-center">
+            <Card className="max-w-md mx-auto border-yellow-500/20 bg-card/90">
+              <CardHeader className="text-center">
+                <div className="mx-auto w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-4">
+                  <Lock className="h-8 w-8 text-yellow-500" />
+                </div>
+                <CardTitle className="text-xl text-yellow-600 flex items-center justify-center gap-2">
+                  <Crown className="h-5 w-5" />
+                  Conteúdo Premium
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center space-y-4">
+                <p className="text-muted-foreground">
+                  Para acessar nossa biblioteca completa de downloads jurídicos, você precisa da versão premium.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-green-600">
+                    <Crown className="h-4 w-4" />
+                    <span>Milhares de materiais jurídicos</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-green-600">
+                    <Crown className="h-4 w-4" />
+                    <span>Modelos e petições atualizados</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-green-600">
+                    <Crown className="h-4 w-4" />
+                    <span>Downloads ilimitados</span>
+                  </div>
+                </div>
+
+                {isMobileOrTablet ? (
+                  <Button 
+                    onClick={handleAppDownload}
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Baixar App Premium
+                  </Button>
+                ) : (
+                  <Button 
+                    onClick={() => setShowPremiumModal(true)}
+                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold"
+                  >
+                    <Crown className="h-4 w-4 mr-2" />
+                    Saiba Mais sobre o Premium
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Estatísticas */}
-          <div className="flex flex-wrap gap-4">
-            <Badge variant="secondary" className="text-sm">
-              {downloads.length} livros disponíveis
-            </Badge>
-            <Badge variant="secondary" className="text-sm">
-              {areas.length} áreas do direito
-            </Badge>
-            <Badge variant="secondary" className="text-sm">
-              {professions.length} profissões
-            </Badge>
+          {/* Blurred Content Preview */}
+          <div className="blur-sm pointer-events-none">
+            {/* ... keep existing code (controles, tabs, etc) but simplified for preview */}
+            <div className="mb-8 space-y-4">
+              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div className="relative flex-1 max-w-md">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+                  <Input 
+                    placeholder="Pesquisar livros, áreas ou profissões..." 
+                    value={searchQuery} 
+                    onChange={(e) => setSearchQuery(e.target.value)} 
+                    className="pl-10" 
+                    disabled
+                  />
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-4">
+                <Badge variant="secondary" className="text-sm">
+                  {downloads.length} livros disponíveis
+                </Badge>
+                <Badge variant="secondary" className="text-sm">
+                  {areas.length} áreas do direito
+                </Badge>
+              </div>
+            </div>
+
+            <Tabs defaultValue="areas" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-6">
+                <TabsTrigger value="areas" className="text-sm" disabled>
+                  <Filter className="h-4 w-4 mr-2" />
+                  Por Área
+                </TabsTrigger>
+                <TabsTrigger value="profissoes" className="text-sm" disabled>
+                  <Filter className="h-4 w-4 mr-2" />
+                  Por Profissão
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Tabs */}
-        <Tabs defaultValue="areas" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6">
-            <TabsTrigger value="areas" className="text-sm">
-              <Filter className="h-4 w-4 mr-2" />
-              Por Área
-            </TabsTrigger>
-            <TabsTrigger value="profissoes" className="text-sm">
-              <Filter className="h-4 w-4 mr-2" />
-              Por Profissão
-            </TabsTrigger>
-          </TabsList>
-
-          {/* Tab: Por Área */}
-          <TabsContent value="areas" className="mt-6">
-            <div className="space-y-6">
-              {/* Seletor de Área */}
-              <div className="w-full max-w-sm">
-                <Select value={selectedArea} onValueChange={setSelectedArea}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma área do direito" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {areas.map(area => <SelectItem key={area} value={area}>
-                        <div className="flex items-center gap-2">
-                          <div className="w-3 h-3 rounded-full" style={{
-                        backgroundColor: getAreaColorValue(area)
-                      }}></div>
-                          {area}
-                        </div>
-                      </SelectItem>)}
-                  </SelectContent>
-                </Select>
+        {/* Premium Info Modal */}
+        {showPremiumModal && (
+          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+            <div className="bg-background rounded-lg w-full max-w-2xl relative">
+              <div className="flex items-center justify-between p-4 border-b">
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <Crown className="h-5 w-5 text-yellow-500" />
+                  Direito Premium
+                </h3>
+                <Button variant="ghost" size="icon" onClick={() => setShowPremiumModal(false)}>
+                  <X className="h-4 w-4" />
+                </Button>
               </div>
-
-              {/* Lista de Livros da Área Selecionada */}
-              {selectedArea ? <motion.div initial={{
-              opacity: 0
-            }} animate={{
-              opacity: 1
-            }} transition={{
-              delay: 0.2
-            }}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <Badge className={`${getAreaColor(selectedArea)} text-base px-3 py-1`}>
-                      {getBooksByArea(selectedArea).length} livros
-                    </Badge>
-                    <h2 className="text-2xl font-bold">{selectedArea}</h2>
+              <div className="p-6 text-center space-y-4">
+                <Crown className="h-16 w-16 text-yellow-500 mx-auto" />
+                <h3 className="text-2xl font-bold text-yellow-600">Biblioteca Premium</h3>
+                <p className="text-lg text-muted-foreground">
+                  Baixe o app Direito Premium para ter acesso completo à nossa biblioteca jurídica com milhares de materiais.
+                </p>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Disponível para:</p>
+                  <div className="flex gap-4 justify-center">
+                    <Badge variant="outline">iOS - App Store</Badge>
+                    <Badge variant="outline">Android - Play Store</Badge>
                   </div>
-                  
-                  {getBooksByArea(selectedArea).length === 0 ? <div className="text-center py-12">
-                      <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-muted-foreground mb-2">
-                        Nenhum livro encontrado
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {searchQuery ? 'Tente ajustar sua pesquisa.' : 'Nenhum livro disponível nesta área.'}
-                      </p>
-                    </div> : <div className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                      {getBooksByArea(selectedArea).map((item, index) => <motion.div key={`${selectedArea}-${index}`} initial={{
-                  opacity: 0,
-                  y: 20
-                }} animate={{
-                  opacity: 1,
-                  y: 0
-                }} transition={{
-                  delay: index * 0.1
-                }}>
-                          <BookCard book={item} areaColor={getAreaColorValue(item.area)} getProfessionLogo={getProfessionLogo} />
-                        </motion.div>)}
-                    </div>}
-                </motion.div> : <div className="text-center py-16">
-                  <BookOpen className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-muted-foreground mb-3">
-                    Selecione uma área
-                  </h3>
-                  <p className="text-lg text-muted-foreground">
-                    Escolha uma área do direito para explorar os livros disponíveis.
-                  </p>
-                </div>}
-            </div>
-          </TabsContent>
-
-          {/* Tab: Por Profissão */}
-          <TabsContent value="profissoes" className="mt-6">
-            <div className="space-y-6">
-              {/* Seletor de Profissão */}
-              <div className="w-full max-w-sm">
-                <Select value={selectedProfession} onValueChange={setProfession}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione uma profissão" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {professions.map(profession => {
-                    const logo = getProfessionLogo(profession);
-                    return <SelectItem key={profession} value={profession}>
-                          <div className="flex items-center gap-2">
-                            {logo && <div className="w-4 h-4 p-0.5 bg-white rounded-sm shadow-sm border">
-                                <img src={logo} alt={profession} className="w-full h-full object-contain" />
-                              </div>}
-                            {profession}
-                          </div>
-                        </SelectItem>;
-                  })}
-                  </SelectContent>
-                </Select>
+                </div>
               </div>
-
-              {/* Lista de Livros da Profissão Selecionada */}
-              {selectedProfession ? <motion.div initial={{
-              opacity: 0
-            }} animate={{
-              opacity: 1
-            }} transition={{
-              delay: 0.2
-            }}>
-                  <div className="flex items-center gap-3 mb-6">
-                    <Badge variant="default" className="text-base px-3 py-1">
-                      {getBooksByProfession(selectedProfession).length} livros
-                    </Badge>
-                    <div className="flex items-center gap-3">
-                      {getProfessionLogo(selectedProfession) && <div className="w-8 h-8 p-1 bg-white rounded-md shadow-sm border">
-                          <img src={getProfessionLogo(selectedProfession)} alt={selectedProfession} className="w-full h-full object-contain" />
-                        </div>}
-                      <h2 className="text-2xl font-bold">{selectedProfession}</h2>
-                    </div>
-                  </div>
-                  
-                  {getBooksByProfession(selectedProfession).length === 0 ? <div className="text-center py-12">
-                      <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-                      <h3 className="text-xl font-semibold text-muted-foreground mb-2">
-                        Nenhum livro encontrado
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {searchQuery ? 'Tente ajustar sua pesquisa.' : 'Nenhum livro disponível para esta profissão.'}
-                      </p>
-                    </div> : <div className={`grid gap-4 ${viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' : 'grid-cols-1'}`}>
-                      {getBooksByProfession(selectedProfession).map((item, index) => <motion.div key={`${selectedProfession}-${index}`} initial={{
-                  opacity: 0,
-                  y: 20
-                }} animate={{
-                  opacity: 1,
-                  y: 0
-                }} transition={{
-                  delay: index * 0.1
-                }}>
-                          <BookCard book={item} areaColor={getAreaColorValue(item.area)} getProfessionLogo={getProfessionLogo} showAreaBadge />
-                        </motion.div>)}
-                    </div>}
-                </motion.div> : <div className="text-center py-16">
-                  <BookOpen className="h-20 w-20 text-muted-foreground mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-muted-foreground mb-3">
-                    Selecione uma profissão
-                  </h3>
-                  <p className="text-lg text-muted-foreground">
-                    Escolha uma profissão para descobrir os livros recomendados.
-                  </p>
-                </div>}
             </div>
-          </TabsContent>
-        </Tabs>
+          </div>
+        )}
       </div>
-    </div>;
+    </div>
+  );
 };
