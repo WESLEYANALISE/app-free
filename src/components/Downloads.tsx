@@ -1,4 +1,3 @@
-
 import { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -11,25 +10,27 @@ import { useDownloads } from '@/hooks/useDownloads';
 import { BookCard } from '@/components/BookCard';
 import { motion } from 'framer-motion';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
-
 export const Downloads = () => {
-  const { downloads, loading, error } = useDownloads();
-  const { isMobileOrTablet } = useDeviceDetection();
+  const {
+    downloads,
+    loading,
+    error
+  } = useDownloads();
+  const {
+    isMobileOrTablet
+  } = useDeviceDetection();
   const [selectedArea, setSelectedArea] = useState<string>('');
   const [selectedProfession, setProfession] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showPremiumModal, setShowPremiumModal] = useState(false);
-
   const handleDownloadClick = () => {
     setShowPremiumModal(true);
   };
-
   const handleAppDownload = () => {
     const userAgent = navigator.userAgent;
     const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !(window as any).MSStream;
     const isAndroid = /Android/.test(userAgent);
-
     if (isIOS) {
       window.open('https://apps.apple.com/us/app/direito-premium/id6451451647', '_blank');
     } else if (isAndroid) {
@@ -78,12 +79,7 @@ export const Downloads = () => {
   const getFilteredBooks = useMemo(() => {
     let filtered = downloads;
     if (searchQuery) {
-      filtered = filtered.filter(book => 
-        book.livro?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.area?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.profissao?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        book.sobre?.toLowerCase().includes(searchQuery.toLowerCase())
-      );
+      filtered = filtered.filter(book => book.livro?.toLowerCase().includes(searchQuery.toLowerCase()) || book.area?.toLowerCase().includes(searchQuery.toLowerCase()) || book.profissao?.toLowerCase().includes(searchQuery.toLowerCase()) || book.sobre?.toLowerCase().includes(searchQuery.toLowerCase()));
     }
     return filtered;
   }, [downloads, searchQuery]);
@@ -97,39 +93,35 @@ export const Downloads = () => {
   const getBooksByProfession = (profession: string) => {
     return getFilteredBooks.filter(d => d.profissao && d.profissao.toLowerCase().includes(profession.toLowerCase()));
   };
-
   if (loading) {
-    return (
-      <div className="min-h-screen bg-background p-4">
+    return <div className="min-h-screen bg-background p-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
             <p className="mt-4 text-muted-foreground">Carregando downloads...</p>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
   if (error) {
-    return (
-      <div className="min-h-screen bg-background p-4">
+    return <div className="min-h-screen bg-background p-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center py-12">
             <p className="text-red-500">Erro: {error}</p>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   }
-  return (
-    <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8 px-[10px] py-[33px]">
         {/* Enhanced Premium Header */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          className="mb-8 text-center"
-        >
+        <motion.div initial={{
+        opacity: 0,
+        y: 20
+      }} animate={{
+        opacity: 1,
+        y: 0
+      }} className="mb-8 text-center">
           <div className="inline-flex items-center gap-3 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-600 px-6 py-3 rounded-full text-lg font-bold mb-6 border border-yellow-500/30">
             <Crown className="w-6 h-6" />
             <span>Biblioteca Premium Exclusiva</span>
@@ -225,33 +217,21 @@ export const Downloads = () => {
                 </div>
 
                 {/* Pricing Highlight */}
-                <div className="bg-gradient-to-r from-green-50/50 to-blue-50/50 rounded-2xl p-6 border border-green-500/20">
+                <div className="bg-gradient-to-r from-green-50/50 to-blue-50/50 rounded-2xl p-6 border border-green-500/20 bg-white">
                   <div className="text-3xl font-bold text-green-600 mb-2">R$ 39,99</div>
                   <div className="text-lg font-semibold text-green-700 mb-2">💎 Pagamento Único - Vitalício</div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-sm text-muted-foreground bg-zinc-50">
                     Sem mensalidades! Acesso para sempre a todos os materiais
                   </div>
                 </div>
 
-                {isMobileOrTablet ? (
-                  <Button 
-                    onClick={handleAppDownload}
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                    size="lg"
-                  >
+                {isMobileOrTablet ? <Button onClick={handleAppDownload} className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" size="lg">
                     <Download className="h-5 w-5 mr-2" />
                     Baixar App Premium - R$ 39,99
-                  </Button>
-                ) : (
-                  <Button 
-                    onClick={() => setShowPremiumModal(true)}
-                    className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                    size="lg"
-                  >
+                  </Button> : <Button onClick={() => setShowPremiumModal(true)} className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" size="lg">
                     <Crown className="h-5 w-5 mr-2" />
                     Upgrade para Premium - R$ 39,99
-                  </Button>
-                )}
+                  </Button>}
                 
                 <p className="text-xs text-muted-foreground">
                   ✅ Garantia de 7 dias • ✅ Acesso imediato • ✅ Suporte especializado
@@ -267,13 +247,7 @@ export const Downloads = () => {
               <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                 <div className="relative flex-1 max-w-md">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                  <Input 
-                    placeholder="Pesquisar livros, áreas ou profissões..." 
-                    value={searchQuery} 
-                    onChange={(e) => setSearchQuery(e.target.value)} 
-                    className="pl-10" 
-                    disabled
-                  />
+                  <Input placeholder="Pesquisar livros, áreas ou profissões..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="pl-10" disabled />
                 </div>
               </div>
               
@@ -303,8 +277,7 @@ export const Downloads = () => {
         </div>
 
         {/* Enhanced Premium Info Modal */}
-        {showPremiumModal && (
-          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+        {showPremiumModal && <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
             <div className="bg-background rounded-2xl w-full max-w-4xl relative max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between p-6 border-b border-yellow-500/20">
                 <h3 className="text-2xl font-bold flex items-center gap-3">
@@ -378,19 +351,13 @@ export const Downloads = () => {
                   </div>
                 </div>
 
-                <Button 
-                  onClick={handleAppDownload}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 px-8 text-xl rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
-                  size="lg"
-                >
+                <Button onClick={handleAppDownload} className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 px-8 text-xl rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105" size="lg">
                   <Download className="h-6 w-6 mr-3" />
                   Baixar App Premium Agora
                 </Button>
               </div>
             </div>
-          </div>
-        )}
+          </div>}
       </div>
-    </div>
-  );
+    </div>;
 };
