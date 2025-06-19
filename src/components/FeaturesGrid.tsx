@@ -41,7 +41,8 @@ import {
   Code,
   Database,
   Hammer,
-  Crown
+  Crown,
+  Check
 } from 'lucide-react';
 
 // Array expandido de ícones únicos
@@ -53,14 +54,22 @@ const availableIcons = [
   File, Archive, Code, Database, Hammer
 ];
 
-// Funções gratuitas (não premium)
+// Funções gratuitas (liberadas)
 const freeFunctions = [
+  'vade mecum',
   'áudio aulas',
   'audio aulas', 
   'vídeo aulas',
   'video aulas',
-  'vade mecum',
-  'videoaulas'
+  'videoaulas',
+  'banco de questões',
+  'questões',
+  'dicionário jurídico',
+  'dicionario juridico',
+  'juriflix',
+  'flashcards',
+  'flashcard',
+  'flash cards'
 ];
 
 const isFreeFunction = (funcao: string) => {
@@ -183,7 +192,7 @@ export const FeaturesGrid = () => {
           {sortedFunctions.map((func, index) => {
             const Icon = getUniqueIconForFunction(func.funcao, index);
             const colorClass = getColorForFunction(index);
-            const isPremium = !isFreeFunction(func.funcao);
+            const isFree = isFreeFunction(func.funcao);
             
             return (
               <Card 
@@ -193,10 +202,16 @@ export const FeaturesGrid = () => {
                 onClick={() => handleFunctionClick(func.funcao)}
               >
                 <CardContent className="p-4 sm:p-6 text-center relative">
-                  {/* Premium badge discreto */}
-                  {isPremium && (
+                  {/* Badge para indicar se é grátis ou premium */}
+                  {isFree ? (
                     <div className="absolute top-2 right-2 z-10">
-                      <Crown className="h-3 w-3 text-yellow-500 opacity-60" />
+                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                        <Check className="h-3 w-3 text-white" />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="absolute top-2 right-2 z-10">
+                      <Crown className="h-4 w-4 text-yellow-500 opacity-60" />
                     </div>
                   )}
 

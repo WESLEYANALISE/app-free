@@ -1,3 +1,4 @@
+
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
@@ -40,16 +41,22 @@ export const AppFunction = () => {
     return null;
   }
 
-  // Funções gratuitas (não premium) - incluindo notícias jurídicas
+  // Funções gratuitas (liberadas)
   const freeFunctions = [
+    'vade mecum',
     'áudio aulas',
     'audio aulas', 
     'vídeo aulas',
     'video aulas',
-    'vade mecum',
     'videoaulas',
-    'notícias jurídicas',
-    'noticias juridicas'
+    'banco de questões',
+    'questões',
+    'dicionário jurídico',
+    'dicionario juridico',
+    'juriflix',
+    'flashcards',
+    'flashcard',
+    'flash cards'
   ];
 
   const isFreeFunction = (funcao: string) => {

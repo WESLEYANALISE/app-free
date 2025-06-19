@@ -45,7 +45,8 @@ import {
   Database,
   Hammer,
   Edit,
-  Crown
+  Crown,
+  Check
 } from 'lucide-react';
 
 // Array expandido de ícones únicos
@@ -57,16 +58,22 @@ const availableIcons = [
   File, Archive, Code, Database, Hammer, Edit
 ];
 
-// Funções gratuitas (não premium)
+// Funções gratuitas (liberadas)
 const freeFunctions = [
+  'vade mecum',
   'áudio aulas',
   'audio aulas', 
   'vídeo aulas',
   'video aulas',
-  'vade mecum',
   'videoaulas',
-  'notícias jurídicas',
-  'noticias juridicas'
+  'banco de questões',
+  'questões',
+  'dicionário jurídico',
+  'dicionario juridico',
+  'juriflix',
+  'flashcards',
+  'flashcard',
+  'flash cards'
 ];
 
 const isFreeFunction = (funcao: string) => {
@@ -230,7 +237,7 @@ export const QuickAccessSection = () => {
             {quickAccessFunctions.map((func, index) => {
               const colorClass = getColorForIndex(index);
               const Icon = getUniqueIconForFunction(func.funcao, index);
-              const isPremium = !isFreeFunction(func.funcao);
+              const isFree = isFreeFunction(func.funcao);
               
               return (
                 <div
@@ -240,8 +247,14 @@ export const QuickAccessSection = () => {
                   onClick={() => handleQuickAccess(func.funcao)}
                 >
                   <div className="flex flex-col items-center gap-2">
-                    {/* Premium badge discreto */}
-                    {isPremium && (
+                    {/* Badge para indicar se é grátis ou premium */}
+                    {isFree ? (
+                      <div className="absolute -top-1 -right-1 z-10">
+                        <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
+                          <Check className="h-2 w-2 text-white" />
+                        </div>
+                      </div>
+                    ) : (
                       <div className="absolute -top-1 -right-1 z-10">
                         <Crown className="h-3 w-3 text-yellow-500 opacity-70" />
                       </div>
