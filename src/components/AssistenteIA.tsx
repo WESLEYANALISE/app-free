@@ -72,18 +72,24 @@ export const AssistenteIA = () => {
           </p>
         </div>
 
-        {/* Video Demo Button */}
-        <div className="mb-6 sm:mb-8 text-center">
-          <Button 
-            onClick={handleVideoClick} 
-            variant="outline" 
-            className="flex items-center gap-2 mx-auto border-red-500/30 text-red-500 hover:bg-red-500/10 text-sm sm:text-base" 
-            size="sm"
-          >
-            <Play className="h-3 w-3 sm:h-4 sm:w-4" />
-            Ver Demonstração Premium
-          </Button>
-        </div>
+        {/* Video Demo Section - DESTACADO */}
+        <Card className="mb-8 border-red-500/40 bg-gradient-to-r from-red-500/10 to-orange-500/10 backdrop-blur-sm">
+          <CardContent className="p-6 text-center">
+            <div className="mb-4">
+              <Play className="h-12 w-12 text-red-500 mx-auto mb-3" />
+              <h3 className="text-xl font-bold text-red-500 mb-2">Vídeo Demonstrativo</h3>
+              <p className="text-muted-foreground">Veja como a IA Premium pode revolucionar sua prática jurídica</p>
+            </div>
+            <Button 
+              onClick={handleVideoClick} 
+              className="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-3 text-lg rounded-xl"
+              size="lg"
+            >
+              <Play className="h-5 w-5 mr-2" />
+              Assistir Demonstração
+            </Button>
+          </CardContent>
+        </Card>
 
         {/* Options Grid - Agora com overlay premium */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
@@ -188,25 +194,26 @@ export const AssistenteIA = () => {
           </CardContent>
         </Card>
 
-        {/* Video Modal */}
+        {/* Video Modal - Expandido e melhorado */}
         {showVideo && (
-          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-3 sm:p-4">
-            <div className="bg-background rounded-lg w-full max-w-4xl h-[70vh] relative">
-              <div className="flex items-center justify-between p-3 sm:p-4 border-b py-[7px] px-[10px]">
-                <h3 className="text-base sm:text-lg font-semibold flex items-center gap-2">
-                  <Crown className="h-4 w-4 text-yellow-500" />
-                  Demonstração da IA Premium
+          <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-3 sm:p-4">
+            <div className="bg-background rounded-xl w-full max-w-6xl h-[80vh] relative border border-border/50">
+              <div className="flex items-center justify-between p-4 border-b border-border/50">
+                <h3 className="text-lg font-bold flex items-center gap-2">
+                  <Crown className="h-5 w-5 text-yellow-500" />
+                  Demonstração Completa da IA Premium
                 </h3>
-                <Button variant="ghost" size="icon" onClick={closeVideo}>
-                  <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                <Button variant="ghost" size="icon" onClick={closeVideo} className="hover:bg-red-500/10 hover:text-red-400">
+                  <X className="h-5 w-5" />
                 </Button>
               </div>
-              <div className="p-3 sm:p-4 h-full px-0 py-[3px]">
+              <div className="p-0 h-full">
                 <iframe 
-                  src="https://www.youtube.com/embed/HlE9u1c_MPQ" 
-                  className="w-full h-full rounded" 
-                  title="Demonstração da IA Premium" 
+                  src="https://www.youtube.com/embed/HlE9u1c_MPQ?autoplay=1&rel=0" 
+                  className="w-full h-full rounded-b-xl" 
+                  title="Demonstração Completa da IA Premium" 
                   frameBorder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen 
                 />
               </div>

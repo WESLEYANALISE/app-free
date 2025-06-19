@@ -64,7 +64,9 @@ const freeFunctions = [
   'vídeo aulas',
   'video aulas',
   'vade mecum',
-  'videoaulas'
+  'videoaulas',
+  'notícias jurídicas',
+  'noticias juridicas'
 ];
 
 const isFreeFunction = (funcao: string) => {

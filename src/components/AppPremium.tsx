@@ -13,7 +13,13 @@ import {
   ArrowRight,
   Zap,
   Users,
-  Play
+  Play,
+  FileText,
+  Bot,
+  Globe,
+  Library,
+  BookOpen,
+  Headphones
 } from 'lucide-react';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 
@@ -36,94 +42,124 @@ export const AppPremium = () => {
     }
   };
 
-  const premiumFeatures = [
-    { icon: Shield, title: 'Sem Anúncios', desc: 'Experiência livre de interrupções' },
-    { icon: Crown, title: 'IA Premium', desc: 'Assistente jurídico avançado' },
-    { icon: Download, title: 'Downloads Ilimitados', desc: 'Acesso completo à biblioteca' },
-    { icon: Play, title: 'Plataforma Desktop', desc: 'Versão completa profissional' },
-    { icon: Users, title: 'Suporte Prioritário', desc: 'Atendimento especializado' },
-    { icon: Zap, title: 'Recursos Exclusivos', desc: 'Funcionalidades premium' }
+  const premiumAreas = [
+    { 
+      icon: FileText, 
+      title: '10.000+ Materiais Premium', 
+      desc: 'Petições, contratos, pareceres e modelos atualizados',
+      color: 'from-emerald-600 to-teal-600'
+    },
+    { 
+      icon: Download, 
+      title: 'Downloads Ilimitados', 
+      desc: 'Baixe quantos materiais quiser, sem limites',
+      color: 'from-blue-600 to-cyan-600'
+    },
+    { 
+      icon: Shield, 
+      title: '100% Sem Anúncios', 
+      desc: 'Experiência profissional sem interrupções',
+      color: 'from-purple-600 to-violet-600'
+    },
+    { 
+      icon: Zap, 
+      title: 'Sempre Atualizado', 
+      desc: 'Conteúdo revisado por especialistas diariamente',
+      color: 'from-amber-600 to-yellow-600'
+    },
+    { 
+      icon: Bot, 
+      title: 'IA Jurídica Avançada', 
+      desc: 'Assistente especializado com recursos exclusivos',
+      color: 'from-indigo-600 to-blue-600'
+    },
+    { 
+      icon: Users, 
+      title: 'Suporte Especializado', 
+      desc: 'Atendimento prioritário com juristas experientes',
+      color: 'from-rose-600 to-pink-600'
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-background p-4 pb-20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-zinc-900 p-4 pb-20">
       <div className="max-w-4xl mx-auto space-y-6">
         
-        {/* Header */}
+        {/* Header com gradiente escuro */}
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 p-3 rounded-2xl bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/30">
-            <Crown className="h-8 w-8 text-yellow-500" />
-            <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-yellow-600 to-orange-600 bg-clip-text text-transparent">
+          <div className="inline-flex items-center gap-3 p-4 rounded-3xl bg-gradient-to-r from-yellow-500/30 to-orange-500/30 border border-yellow-500/50 backdrop-blur-sm">
+            <Crown className="h-10 w-10 text-yellow-400" />
+            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
               Direito Premium
             </h1>
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Acelere sua carreira jurídica com recursos exclusivos
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+            A plataforma mais completa para profissionais do Direito
           </p>
         </div>
 
-        {/* Pricing Card */}
-        <Card className="border-yellow-500/30 bg-gradient-to-br from-yellow-50/10 to-orange-50/10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 bg-gradient-to-l from-yellow-500 to-orange-500 text-white px-4 py-2 rounded-bl-2xl">
-            <div className="flex items-center gap-1">
-              <Star className="h-3 w-3" />
+        {/* Pricing Card com design escuro */}
+        <Card className="border-yellow-500/40 bg-gradient-to-br from-slate-800/80 to-gray-800/80 backdrop-blur-sm relative overflow-hidden">
+          <div className="absolute top-0 right-0 bg-gradient-to-l from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-bl-3xl">
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4" />
               <span className="text-sm font-bold">MAIS POPULAR</span>
             </div>
           </div>
           
-          <CardContent className="text-center py-8 px-6">
-            <Badge className="bg-green-500/20 text-green-400 border-green-500/30 mb-4">
-              <Sparkles className="h-4 w-4 mr-1" />
+          <CardContent className="text-center py-10 px-8">
+            <Badge className="bg-green-500/30 text-green-300 border-green-500/50 mb-6 px-4 py-2 text-base">
+              <Sparkles className="h-5 w-5 mr-2" />
               Oferta Especial - Tempo Limitado
             </Badge>
             
-            <div className="space-y-2 mb-6">
-              <div className="text-4xl md:text-5xl font-bold text-yellow-600">
+            <div className="space-y-4 mb-8">
+              <div className="text-6xl md:text-7xl font-bold text-yellow-400">
                 R$ 39,99
               </div>
-              <div className="text-lg md:text-xl text-green-400 font-bold">
-                🎉 PAGAMENTO ÚNICO - VITALÍCIO
+              <div className="text-2xl md:text-3xl text-green-400 font-bold">
+                💎 PAGAMENTO ÚNICO - VITALÍCIO
               </div>
-              <div className="text-sm text-muted-foreground">
-                <span className="line-through text-red-500">R$ 199,99</span>
-                <span className="ml-2 bg-red-500 text-white px-2 py-1 rounded text-xs">80% OFF</span>
+              <div className="text-lg text-gray-300">
+                <span className="line-through text-red-400">R$ 199,99</span>
+                <span className="ml-3 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold">80% OFF</span>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-gray-400 text-lg">
                 Sem mensalidades! Pague uma vez e tenha acesso para sempre
               </p>
             </div>
             
             <Button 
               onClick={handleDownloadApp}
-              className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 text-lg rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg mb-3"
+              className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-6 text-xl rounded-2xl transform hover:scale-105 transition-all duration-300 shadow-2xl mb-4"
               size="lg"
             >
-              <Crown className="h-5 w-5 mr-2" />
-              Upgrade para Premium
-              <ArrowRight className="h-4 w-4 ml-2" />
+              <Crown className="h-6 w-6 mr-3" />
+              Upgrade para Premium Agora
+              <ArrowRight className="h-5 w-5 ml-3" />
             </Button>
             
-            <p className="text-xs text-muted-foreground">
-              ✅ Garantia de 7 dias • ✅ Acesso imediato
+            <p className="text-sm text-gray-400">
+              ✅ Garantia de 7 dias • ✅ Acesso imediato • ✅ Suporte premium
             </p>
           </CardContent>
         </Card>
 
-        {/* Features Grid */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-bold text-center">Recursos Premium</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {premiumFeatures.map((feature, index) => {
-              const Icon = feature.icon;
+        {/* Premium Areas Grid */}
+        <div className="space-y-6">
+          <h2 className="text-2xl font-bold text-center text-white">Vantagens Premium</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {premiumAreas.map((area, index) => {
+              const Icon = area.icon;
               return (
-                <Card key={index} className="border-border/30 hover:border-yellow-500/30 transition-all duration-300 hover:scale-105">
-                  <CardContent className="p-4 text-center space-y-3">
-                    <div className="mx-auto w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                      <Icon className="h-6 w-6 text-primary" />
+                <Card key={index} className="border-gray-700/50 bg-gradient-to-br from-slate-800/60 to-gray-800/60 backdrop-blur-sm hover:border-yellow-500/50 transition-all duration-300 hover:scale-105 group">
+                  <CardContent className="p-6 space-y-4">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${area.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
+                      <Icon className="h-8 w-8 text-white" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-sm">{feature.title}</h3>
-                      <p className="text-xs text-muted-foreground mt-1">{feature.desc}</p>
+                      <h3 className="font-bold text-lg text-white mb-2">{area.title}</h3>
+                      <p className="text-gray-300 text-sm leading-relaxed">{area.desc}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -132,92 +168,71 @@ export const AppPremium = () => {
           </div>
         </div>
 
-        {/* Comparison */}
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-lg font-bold text-center mb-4">Grátis vs Premium</h3>
-            <div className="space-y-3">
-              <div className="flex items-center justify-between py-2 border-b border-border/30">
-                <span className="text-sm">Vade Mecum Digital</span>
-                <div className="flex gap-6 text-center">
-                  <Check className="h-4 w-4 text-green-500" />
-                  <Check className="h-4 w-4 text-green-500" />
+        {/* Comparison Table */}
+        <Card className="border-gray-700/50 bg-gradient-to-br from-slate-800/60 to-gray-800/60 backdrop-blur-sm">
+          <CardContent className="p-8">
+            <h3 className="text-2xl font-bold text-center text-white mb-8">Grátis vs Premium</h3>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between py-4 border-b border-gray-700/50">
+                <span className="text-gray-300 font-medium">Vade Mecum Digital</span>
+                <div className="flex gap-12 text-center">
+                  <Check className="h-5 w-5 text-green-400" />
+                  <Check className="h-5 w-5 text-green-400" />
                 </div>
               </div>
-              <div className="flex items-center justify-between py-2 border-b border-border/30">
-                <span className="text-sm">Anúncios</span>
-                <div className="flex gap-6 text-center">
-                  <span className="text-xs text-red-500">Com anúncios</span>
-                  <span className="text-xs text-green-500 font-semibold">Sem anúncios</span>
+              <div className="flex items-center justify-between py-4 border-b border-gray-700/50">
+                <span className="text-gray-300 font-medium">Anúncios</span>
+                <div className="flex gap-12 text-center">
+                  <span className="text-red-400 font-semibold">Com anúncios</span>
+                  <span className="text-green-400 font-semibold">Zero anúncios</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between py-2 border-b border-border/30">
-                <span className="text-sm">Plataforma Desktop</span>
-                <div className="flex gap-6 text-center">
-                  <span className="text-xs text-red-500">Não</span>
-                  <Check className="h-4 w-4 text-green-500" />
+              <div className="flex items-center justify-between py-4 border-b border-gray-700/50">
+                <span className="text-gray-300 font-medium">Materiais Jurídicos</span>
+                <div className="flex gap-12 text-center">
+                  <span className="text-red-400">Limitado</span>
+                  <span className="text-green-400 font-semibold">10.000+</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between py-2 border-b border-border/30">
-                <span className="text-sm">Downloads</span>
-                <div className="flex gap-6 text-center">
-                  <span className="text-xs text-red-500">Limitado</span>
-                  <span className="text-xs text-green-500 font-semibold">Ilimitados</span>
+              <div className="flex items-center justify-between py-4 border-b border-gray-700/50">
+                <span className="text-gray-300 font-medium">Downloads</span>
+                <div className="flex gap-12 text-center">
+                  <span className="text-red-400">Limitado</span>
+                  <span className="text-green-400 font-semibold">Ilimitados</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between py-2">
-                <span className="text-sm">Assistente IA</span>
-                <div className="flex gap-6 text-center">
-                  <span className="text-xs">Básico</span>
-                  <span className="text-xs text-green-500 font-semibold">Avançado</span>
+              <div className="flex items-center justify-between py-4">
+                <span className="text-gray-300 font-medium">Assistente IA</span>
+                <div className="flex gap-12 text-center">
+                  <span className="text-gray-400">Básico</span>
+                  <span className="text-green-400 font-semibold">Avançado</span>
                 </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* FAQ */}
-        <Card>
-          <CardContent className="p-6 space-y-4">
-            <h3 className="text-lg font-bold text-center">Perguntas Frequentes</h3>
-            <div className="space-y-3 text-sm">
-              <div>
-                <h4 className="font-semibold mb-1">❓ O que significa "vitalício"?</h4>
-                <p className="text-muted-foreground">Pague uma vez e tenha acesso para sempre, sem mensalidades.</p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-1">❓ Posso cancelar se não gostar?</h4>
-                <p className="text-muted-foreground">Sim! Garantia de 7 dias com devolução de 100% do valor.</p>
-              </div>
-              <div>
-                <h4 className="font-semibold mb-1">❓ Funciona em todos os dispositivos?</h4>
-                <p className="text-muted-foreground">Sim! App móvel, tablet e plataforma desktop com sincronização.</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Final CTA */}
-        <Card className="border-yellow-500/30 bg-gradient-to-br from-yellow-50/10 to-orange-50/10">
-          <CardContent className="text-center py-8">
-            <Crown className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-            <h3 className="text-2xl font-bold mb-3 text-yellow-600">
-              Não perca esta oportunidade!
+        <Card className="border-yellow-500/40 bg-gradient-to-br from-slate-800/80 to-gray-800/80 backdrop-blur-sm">
+          <CardContent className="text-center py-10">
+            <Crown className="h-16 w-16 text-yellow-400 mx-auto mb-6" />
+            <h3 className="text-3xl font-bold mb-4 text-yellow-400">
+              Transforme sua prática jurídica!
             </h3>
-            <p className="text-muted-foreground mb-6 max-w-lg mx-auto">
-              Mais de 50.000 profissionais já escolheram o Direito Premium. 
-              Acelere sua carreira jurídica hoje mesmo.
+            <p className="text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+              Mais de 50.000 advogados já escolheram o Direito Premium. 
+              Tenha acesso completo aos melhores recursos jurídicos do Brasil.
             </p>
             <Button 
               onClick={handleDownloadApp}
-              className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-4 text-lg rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg"
+              className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white font-bold py-6 text-xl rounded-2xl transform hover:scale-105 transition-all duration-300 shadow-2xl"
               size="lg"
             >
-              <Download className="h-5 w-5 mr-2" />
+              <Download className="h-6 w-6 mr-3" />
               Começar Agora - R$ 39,99 Vitalício
             </Button>
-            <p className="text-xs text-muted-foreground mt-3">
-              🔒 Pagamento seguro • 📱 Acesso imediato • ⭐ Garantia de satisfação
+            <p className="text-sm text-gray-400 mt-4">
+              🔒 Pagamento 100% seguro • 📱 Acesso imediato • ⭐ Garantia total
             </p>
           </CardContent>
         </Card>
