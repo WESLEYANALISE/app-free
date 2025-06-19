@@ -1,3 +1,4 @@
+
 import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
@@ -58,11 +59,13 @@ const availableIcons = [
   File, Archive, Code, Database, Hammer, Edit
 ];
 
-// Funções gratuitas (liberadas)
+// Funções gratuitas (liberadas) - incluindo audioaulas
 const freeFunctions = [
   'vade mecum',
   'áudio aulas',
   'audio aulas', 
+  'audioaulas',
+  'aulas de audio',
   'vídeo aulas',
   'video aulas',
   'videoaulas',
@@ -250,7 +253,7 @@ export const QuickAccessSection = () => {
                     {/* Badge discreto para indicar se é grátis ou premium */}
                     {isFree ? (
                       <div className="absolute -top-1 -right-1 z-10">
-                        <CheckCircle className="h-3 w-3 text-green-500/30 stroke-1" />
+                        <Check className="h-3 w-3 text-green-500/30 stroke-1" />
                       </div>
                     ) : (
                       <div className="absolute -top-1 -right-1 z-10">

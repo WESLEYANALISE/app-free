@@ -21,7 +21,17 @@ import {
   BookOpen,
   Headphones,
   Lock,
-  CheckCircle2
+  CheckCircle2,
+  Search,
+  Calculator,
+  Brain,
+  MessageSquare,
+  Award,
+  Briefcase,
+  Eye,
+  Clock,
+  Smartphone,
+  Database
 } from 'lucide-react';
 import { useDeviceDetection } from '@/hooks/useDeviceDetection';
 
@@ -44,7 +54,7 @@ export const AppPremium = () => {
     }
   };
 
-  const premiumAreas = [
+  const premiumFeatures = [
     { 
       icon: Crown, 
       title: '10.000+ Materiais Exclusivos', 
@@ -80,6 +90,66 @@ export const AppPremium = () => {
       title: 'Suporte Prioritário', 
       desc: 'Atendimento especializado com juristas experientes e resposta em até 2 horas',
       color: 'from-indigo-600 to-blue-600'
+    },
+    { 
+      icon: Search, 
+      title: 'Busca Inteligente', 
+      desc: 'Sistema de busca avançado com filtros por área, tribunal, data e relevância',
+      color: 'from-teal-600 to-cyan-600'
+    },
+    { 
+      icon: Calculator, 
+      title: 'Calculadoras Jurídicas', 
+      desc: 'Ferramentas especializadas para cálculos trabalhistas, tributários e previdenciários',
+      color: 'from-pink-600 to-rose-600'
+    },
+    { 
+      icon: Brain, 
+      title: 'Análise de Jurisprudência', 
+      desc: 'IA analisa precedentes e sugere estratégias baseadas em casos similares',
+      color: 'from-violet-600 to-purple-600'
+    },
+    { 
+      icon: MessageSquare, 
+      title: 'Consultoria Especializada', 
+      desc: 'Acesso direto a especialistas em diferentes áreas do direito via chat',
+      color: 'from-slate-600 to-gray-600'
+    },
+    { 
+      icon: Award, 
+      title: 'Certificados Profissionais', 
+      desc: 'Cursos certificados e trilhas de aprendizado para desenvolvimento contínuo',
+      color: 'from-emerald-600 to-green-600'
+    },
+    { 
+      icon: Briefcase, 
+      title: 'Gestão de Casos', 
+      desc: 'Sistema completo para organizar clientes, prazos, audiências e documentos',
+      color: 'from-amber-600 to-orange-600'
+    },
+    { 
+      icon: Eye, 
+      title: 'Monitoramento de Processos', 
+      desc: 'Acompanhamento automático de processos com notificações em tempo real',
+      color: 'from-red-600 to-pink-600'
+    },
+    { 
+      icon: Clock, 
+      title: 'Controle de Prazos', 
+      desc: 'Agenda inteligente com alertas automáticos para prazos processuais',
+      color: 'from-blue-600 to-indigo-600'
+    },
+    { 
+      icon: Smartphone, 
+      title: 'App Mobile Completo', 
+      desc: 'Versão mobile com todas as funcionalidades sincronizadas em tempo real',
+      color: 'from-green-600 to-teal-600'
+    },
+    { 
+      icon: Database, 
+      title: 'Backup na Nuvem', 
+      desc: 'Todos os seus dados seguros e sincronizados automaticamente na nuvem',
+      color: 'from-cyan-600 to-blue-600'
     }
   ];
 
@@ -87,15 +157,10 @@ export const AppPremium = () => {
     <div className="min-h-screen bg-gradient-to-br from-gray-950 via-slate-900 to-gray-900 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent"></div>
-      <div className="absolute inset-0 opacity-5">
-        <div 
-          className="w-full h-full"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.3'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            backgroundSize: '60px 60px'
-          }}
-        ></div>
-      </div>
+      <div className="absolute inset-0" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4af37' fill-opacity='0.05'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        backgroundSize: '60px 60px'
+      }}></div>
       
       <div className="relative z-10 p-4 pb-20">
         <div className="max-w-4xl mx-auto space-y-8">
@@ -175,22 +240,22 @@ export const AppPremium = () => {
             </CardContent>
           </Card>
 
-          {/* Premium Features Grid */}
+          {/* Premium Features Grid Expandido */}
           <div className="space-y-8">
-            <h2 className="text-3xl font-bold text-center text-white">Vantagens Premium</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {premiumAreas.map((area, index) => {
-                const Icon = area.icon;
+            <h2 className="text-3xl font-bold text-center text-white">Todas as Funcionalidades Premium</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {premiumFeatures.map((feature, index) => {
+                const Icon = feature.icon;
                 return (
                   <Card key={index} className="border-gray-700/30 bg-gradient-to-br from-slate-800/20 to-gray-800/20 backdrop-blur-md hover:border-amber-500/40 transition-all duration-500 hover:scale-105 group relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <CardContent className="p-8 space-y-6 relative">
-                      <div className={`w-20 h-20 rounded-3xl bg-gradient-to-r ${area.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-2xl`}>
-                        <Icon className="h-10 w-10 text-white" />
+                    <CardContent className="p-6 space-y-4 relative">
+                      <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-xl`}>
+                        <Icon className="h-8 w-8 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-bold text-xl text-white mb-3">{area.title}</h3>
-                        <p className="text-gray-300 text-base leading-relaxed">{area.desc}</p>
+                        <h3 className="font-bold text-lg text-white mb-2">{feature.title}</h3>
+                        <p className="text-gray-300 text-sm leading-relaxed">{feature.desc}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -206,6 +271,13 @@ export const AppPremium = () => {
               <div className="space-y-6">
                 <div className="flex items-center justify-between py-6 border-b border-gray-700/30">
                   <span className="text-gray-200 font-medium text-lg">Vade Mecum Digital</span>
+                  <div className="flex gap-16 text-center">
+                    <Check className="h-6 w-6 text-green-400" />
+                    <Check className="h-6 w-6 text-green-400" />
+                  </div>
+                </div>
+                <div className="flex items-center justify-between py-6 border-b border-gray-700/30">
+                  <span className="text-gray-200 font-medium text-lg">Áudio Aulas</span>
                   <div className="flex gap-16 text-center">
                     <Check className="h-6 w-6 text-green-400" />
                     <Check className="h-6 w-6 text-green-400" />
@@ -232,11 +304,18 @@ export const AppPremium = () => {
                     <span className="text-green-400 font-semibold text-lg">Ilimitados</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between py-6">
+                <div className="flex items-center justify-between py-6 border-b border-gray-700/30">
                   <span className="text-gray-200 font-medium text-lg">Assistente IA</span>
                   <div className="flex gap-16 text-center">
                     <span className="text-gray-400 text-lg">Básico</span>
                     <span className="text-green-400 font-semibold text-lg">Avançado + Análises</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between py-6">
+                  <span className="text-gray-200 font-medium text-lg">Suporte Técnico</span>
+                  <div className="flex gap-16 text-center">
+                    <span className="text-gray-400 text-lg">Básico</span>
+                    <span className="text-green-400 font-semibold text-lg">Prioritário 24/7</span>
                   </div>
                 </div>
               </div>
