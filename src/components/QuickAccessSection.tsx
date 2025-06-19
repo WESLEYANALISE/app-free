@@ -1,4 +1,3 @@
-
 import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigation } from '@/context/NavigationContext';
@@ -46,6 +45,7 @@ import {
   Hammer,
   Edit,
   Crown,
+  CheckCircle,
   Check
 } from 'lucide-react';
 
@@ -247,16 +247,14 @@ export const QuickAccessSection = () => {
                   onClick={() => handleQuickAccess(func.funcao)}
                 >
                   <div className="flex flex-col items-center gap-2">
-                    {/* Badge para indicar se é grátis ou premium */}
+                    {/* Badge discreto para indicar se é grátis ou premium */}
                     {isFree ? (
                       <div className="absolute -top-1 -right-1 z-10">
-                        <div className="w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
-                          <Check className="h-2 w-2 text-white" />
-                        </div>
+                        <CheckCircle className="h-3 w-3 text-green-500/30 stroke-1" />
                       </div>
                     ) : (
                       <div className="absolute -top-1 -right-1 z-10">
-                        <Crown className="h-3 w-3 text-yellow-500 opacity-70" />
+                        <Crown className="h-3 w-3 text-amber-500/50 stroke-1" />
                       </div>
                     )}
 

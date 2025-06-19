@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from '@/components/ui/card';
 import { useAppFunctions } from '@/hooks/useAppFunctions';
 import { useNavigation } from '@/context/NavigationContext';
@@ -42,7 +41,7 @@ import {
   Database,
   Hammer,
   Crown,
-  Check
+  CheckCircle
 } from 'lucide-react';
 
 // Array expandido de ícones únicos
@@ -202,16 +201,14 @@ export const FeaturesGrid = () => {
                 onClick={() => handleFunctionClick(func.funcao)}
               >
                 <CardContent className="p-4 sm:p-6 text-center relative">
-                  {/* Badge para indicar se é grátis ou premium */}
+                  {/* Badge discreto para indicar se é grátis ou premium */}
                   {isFree ? (
                     <div className="absolute top-2 right-2 z-10">
-                      <div className="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                        <Check className="h-3 w-3 text-white" />
-                      </div>
+                      <CheckCircle className="h-4 w-4 text-green-500/40 stroke-1" />
                     </div>
                   ) : (
                     <div className="absolute top-2 right-2 z-10">
-                      <Crown className="h-4 w-4 text-yellow-500 opacity-60" />
+                      <Crown className="h-4 w-4 text-amber-500/60 stroke-1" />
                     </div>
                   )}
 
