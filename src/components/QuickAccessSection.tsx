@@ -44,7 +44,8 @@ import {
   Code,
   Database,
   Hammer,
-  Edit
+  Edit,
+  Crown
 } from 'lucide-react';
 
 // Array expandido de ícones únicos
@@ -55,6 +56,24 @@ const availableIcons = [
   Heart, Star, Zap, Shield, Globe, Camera, Music, Video, Image, 
   File, Archive, Code, Database, Hammer, Edit
 ];
+
+// Funções gratuitas (não premium)
+const freeFunctions = [
+  'áudio aulas',
+  'audio aulas', 
+  'vídeo aulas',
+  'video aulas',
+  'vade mecum',
+  'videoaulas'
+];
+
+const isFreeFunction = (funcao: string) => {
+  const lowerFuncao = funcao.toLowerCase();
+  return freeFunctions.some(freeFunc => 
+    lowerFuncao.includes(freeFunc) || 
+    freeFunc.includes(lowerFuncao)
+  );
+};
 
 // Get first 8 functions in the specified order
 const getMostUsedFunctions = (functions: any[], isDesktop: boolean) => {
@@ -107,14 +126,14 @@ const getMostUsedFunctions = (functions: any[], isDesktop: boolean) => {
 
 const getColorForIndex = (index: number) => {
   const colors = [
-    'gradient-legal',     // Gold for legal content
-    'gradient-ai',        // Cyan for AI/tech
-    'gradient-study',     // Blue for study materials
-    'gradient-media',     // Purple for media content
-    'gradient-docs',      // Green for documents
-    'gradient-legal',     // Back to gold
-    'gradient-ai',        // Cyan
-    'gradient-study'      // Blue
+    'gradient-legal',
+    'gradient-ai',
+    'gradient-study',
+    'gradient-media',
+    'gradient-docs',
+    'gradient-legal',
+    'gradient-ai',
+    'gradient-study'
   ];
   return colors[index % colors.length];
 };
@@ -133,7 +152,6 @@ const getUniqueIconForFunction = (funcao: string, index: number) => {
   if (name.includes('video') || name.includes('vídeo') || name.includes('aula')) return Play;
   if (name.includes('editar') || name.includes('favoritos')) return Edit;
   
-  // Se não encontrar correspondência específica, usa um ícone único baseado no índice
   return availableIcons[index % availableIcons.length] || Scale;
 };
 
@@ -145,7 +163,6 @@ export const QuickAccessSection = () => {
 
   const handleQuickAccess = (funcao: string) => {
     if (funcao === 'Editar Favoritos') {
-      // Implementar lógica de edição de favoritos no futuro
       console.log('Abrir editor de favoritos');
       return;
     }
@@ -211,15 +228,23 @@ export const QuickAccessSection = () => {
             {quickAccessFunctions.map((func, index) => {
               const colorClass = getColorForIndex(index);
               const Icon = getUniqueIconForFunction(func.funcao, index);
+              const isPremium = !isFreeFunction(func.funcao);
               
               return (
                 <div
                   key={func.id}
-                  className="flex-shrink-0 group cursor-pointer animate-bounce-in-legal"
+                  className="flex-shrink-0 group cursor-pointer animate-bounce-in-legal relative"
                   style={{ animationDelay: `${index * 0.1}s` }}
                   onClick={() => handleQuickAccess(func.funcao)}
                 >
                   <div className="flex flex-col items-center gap-2">
+                    {/* Premium badge discreto */}
+                    {isPremium && (
+                      <div className="absolute -top-1 -right-1 z-10">
+                        <Crown className="h-3 w-3 text-yellow-500 opacity-70" />
+                      </div>
+                    )}
+
                     {/* Enhanced circular button with legal styling and animations */}
                     <div className={`
                       w-14 h-14 sm:w-16 sm:h-16 rounded-full ${colorClass}

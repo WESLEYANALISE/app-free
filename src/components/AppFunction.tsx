@@ -41,22 +41,26 @@ export const AppFunction = () => {
     return null;
   }
 
-  // Funções que devem ser tratadas como premium
-  const premiumFunctions = [
-    'Modelos de Petições',
-    'Mapas Mentais', 
-    'Cursos Preparatórios',
-    'Downloads'
+  // Funções gratuitas (não premium)
+  const freeFunctions = [
+    'áudio aulas',
+    'audio aulas', 
+    'vídeo aulas',
+    'video aulas',
+    'vade mecum',
+    'videoaulas'
   ];
 
-  // Verificar se a função atual é premium
-  const isPremiumFunction = premiumFunctions.some(premiumFunc => 
-    currentFunction.toLowerCase().includes(premiumFunc.toLowerCase()) ||
-    premiumFunc.toLowerCase().includes(currentFunction.toLowerCase())
-  );
+  const isFreeFunction = (funcao: string) => {
+    const lowerFuncao = funcao.toLowerCase();
+    return freeFunctions.some(freeFunc => 
+      lowerFuncao.includes(freeFunc) || 
+      freeFunc.includes(lowerFuncao)
+    );
+  };
 
   // Se for função premium, mostrar o componente Downloads (que já tem lógica premium)
-  if (isPremiumFunction) {
+  if (!isFreeFunction(currentFunction)) {
     return (
       <div className="min-h-screen bg-background">
         {/* Header with back button */}

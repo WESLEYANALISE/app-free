@@ -40,7 +40,8 @@ import {
   Archive,
   Code,
   Database,
-  Hammer
+  Hammer,
+  Crown
 } from 'lucide-react';
 
 // Array expandido de ícones únicos
@@ -52,6 +53,24 @@ const availableIcons = [
   File, Archive, Code, Database, Hammer
 ];
 
+// Funções gratuitas (não premium)
+const freeFunctions = [
+  'áudio aulas',
+  'audio aulas', 
+  'vídeo aulas',
+  'video aulas',
+  'vade mecum',
+  'videoaulas'
+];
+
+const isFreeFunction = (funcao: string) => {
+  const lowerFuncao = funcao.toLowerCase();
+  return freeFunctions.some(freeFunc => 
+    lowerFuncao.includes(freeFunc) || 
+    freeFunc.includes(lowerFuncao)
+  );
+};
+
 const getUniqueIconForFunction = (funcao: string, index: number) => {
   const name = funcao.toLowerCase();
   
@@ -62,13 +81,13 @@ const getUniqueIconForFunction = (funcao: string, index: number) => {
   if (name.includes('audio') || name.includes('áudio')) return Headphones;
   if (name.includes('mapa') && name.includes('mental')) return Brain;
   if (name.includes('plataforma') && name.includes('desktop')) return Monitor;
-  if (name.includes('flashcard') || name.includes('flash card')) return Brain; // Alterado para cérebro
+  if (name.includes('flashcard') || name.includes('flash card')) return Brain;
   if (name.includes('resumo') || name.includes('codigo') || name.includes('código')) return BookOpen;
   if (name.includes('video') || name.includes('vídeo') || name.includes('aula')) return Play;
   if (name.includes('petições') || name.includes('peticoes') || name.includes('petição')) return Folder;
   if (name.includes('noticia') || name.includes('notícia') || name.includes('juridica')) return Newspaper;
   if (name.includes('juriflix') || name.includes('filme') || name.includes('cinema')) return Film;
-  if (name.includes('simulado') || name.includes('prova') || name.includes('oab')) return Hammer; // Alterado para martelo
+  if (name.includes('simulado') || name.includes('prova') || name.includes('oab')) return Hammer;
   if (name.includes('calendario') || name.includes('agenda')) return Calendar;
   if (name.includes('curso') || name.includes('aula')) return GraduationCap;
   if (name.includes('pesquisa') || name.includes('busca')) return Search;
@@ -86,27 +105,26 @@ const getUniqueIconForFunction = (funcao: string, index: number) => {
   if (name.includes('arquivo') || name.includes('file')) return Archive;
   if (name.includes('código') || name.includes('programação')) return Code;
   if (name.includes('banco') || name.includes('dados')) return Database;
-  if (name.includes('questões') || name.includes('questao') || name.includes('questão')) return Target; // Alterado para alvo
-  if (name.includes('dicionário') || name.includes('dicionario')) return Search; // Alterado para lupa
+  if (name.includes('questões') || name.includes('questao') || name.includes('questão')) return Target;
+  if (name.includes('dicionário') || name.includes('dicionario')) return Search;
   
-  // Se não encontrar correspondência específica, usa um ícone único baseado no índice
   return availableIcons[index % availableIcons.length] || Scale;
 };
 
 const getColorForFunction = (index: number) => {
   const colors = [
-    'gradient-legal',     // Gold for legal content
-    'gradient-ai',        // Cyan for AI/tech
-    'gradient-study',     // Blue for study materials
-    'gradient-media',     // Purple for media content
-    'gradient-docs',      // Green for documents
-    'gradient-legal',     // Back to gold
-    'gradient-ai',        // Cyan
-    'gradient-study',     // Blue
-    'gradient-media',     // Purple
-    'gradient-docs',      // Green
-    'gradient-legal',     // Gold
-    'gradient-ai'         // Cyan
+    'gradient-legal',
+    'gradient-ai',
+    'gradient-study',
+    'gradient-media',
+    'gradient-docs',
+    'gradient-legal',
+    'gradient-ai',
+    'gradient-study',
+    'gradient-media',
+    'gradient-docs',
+    'gradient-legal',
+    'gradient-ai'
   ];
   return colors[index % colors.length];
 };
@@ -119,7 +137,6 @@ export const FeaturesGrid = () => {
     setCurrentFunction(funcao);
   };
 
-  // Sort functions by id to maintain table order
   const sortedFunctions = [...functions].sort((a, b) => a.id - b.id);
 
   if (loading) {
@@ -166,15 +183,23 @@ export const FeaturesGrid = () => {
           {sortedFunctions.map((func, index) => {
             const Icon = getUniqueIconForFunction(func.funcao, index);
             const colorClass = getColorForFunction(index);
+            const isPremium = !isFreeFunction(func.funcao);
             
             return (
               <Card 
                 key={func.id} 
-                className="card-legal group cursor-pointer border-border/30 bg-card/60 backdrop-blur-sm hover:bg-card/90 overflow-hidden animate-scale-glow hover:animate-legal-float"
+                className="card-legal group cursor-pointer border-border/30 bg-card/60 backdrop-blur-sm hover:bg-card/90 overflow-hidden animate-scale-glow hover:animate-legal-float relative"
                 style={{ animationDelay: `${index * 0.05}s` }}
                 onClick={() => handleFunctionClick(func.funcao)}
               >
                 <CardContent className="p-4 sm:p-6 text-center relative">
+                  {/* Premium badge discreto */}
+                  {isPremium && (
+                    <div className="absolute top-2 right-2 z-10">
+                      <Crown className="h-3 w-3 text-yellow-500 opacity-60" />
+                    </div>
+                  )}
+
                   {/* Enhanced background gradient effect with animation */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-legal-glow" />
                   
