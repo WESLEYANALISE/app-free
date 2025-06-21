@@ -105,6 +105,27 @@ export type Database = {
         }
         Relationships: []
       }
+      APP_duplicate: {
+        Row: {
+          descricao: string | null
+          funcao: string | null
+          id: number
+          link: string | null
+        }
+        Insert: {
+          descricao?: string | null
+          funcao?: string | null
+          id?: number
+          link?: string | null
+        }
+        Update: {
+          descricao?: string | null
+          funcao?: string | null
+          id?: number
+          link?: string | null
+        }
+        Relationships: []
+      }
       banco_erros: {
         Row: {
           created_at: string | null
