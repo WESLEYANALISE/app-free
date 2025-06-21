@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, User, Mail, CheckCircle, Download, Zap, Shield, Crown, Lock } from 'lucide-react';
+import { Loader2, User, Mail, CheckCircle, Download, Zap, Shield, Crown, Lock, ArrowRight, Star, Gift, Timer } from 'lucide-react';
 import { DesktopPlatformCarousel } from '@/components/DesktopPlatformCarousel';
 import { useNavigation } from '@/context/NavigationContext';
 
@@ -133,107 +134,112 @@ export const PlataformaDesktop = () => {
         <DesktopPlatformCarousel />
       </div>
 
-      {/* Seção de benefícios */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
-        <div style={{ animationDelay: '0.2s' }} className="text-center p-6 bg-card/30 backdrop-blur-sm rounded-2xl border border-border animate-fade-in-up px-[13px] py-0">
-          <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
-            <Zap className="w-8 h-8 text-white" />
-          </div>
-          <h3 className="font-bold text-lg mb-2 text-purple-400">Acesso Imediato</h3>
-          <p className="text-sm text-muted-foreground">Sem espera! Comece a usar assim que fizer o download</p>
-        </div>
-      </div>
-
-      {/* Premium Notice Card */}
-      <Card className="border-yellow-500/30 bg-gradient-to-r from-yellow-50/10 to-orange-50/10 mb-8">
-        <CardHeader className="text-center">
-          <div className="mx-auto w-16 h-16 bg-yellow-500/20 rounded-full flex items-center justify-center mb-4">
-            <Crown className="h-8 w-8 text-yellow-500" />
-          </div>
-          <CardTitle className="text-2xl text-yellow-600 flex items-center justify-center gap-2">
-            <Lock className="h-6 w-6" />
-            Acesso Premium Necessário
-          </CardTitle>
-          <CardDescription className="text-lg">
-            A plataforma desktop completa está disponível apenas para usuários Premium
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="text-center space-y-6">
-          <div className="bg-card/70 rounded-lg p-6 border border-border">
-            <h3 className="font-bold text-lg mb-4 text-yellow-400">✨ Vantagens Premium:</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm">Plataforma Desktop Completa</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm">Sem Anúncios</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm">Assistente IA Premium</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm">Downloads Ilimitados</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm">Suporte Prioritário</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="w-4 h-4 text-green-500" />
-                <span className="text-sm">Acesso Vitalício</span>
-              </div>
+      {/* Enhanced Premium Banner */}
+      <div className="mb-8 relative overflow-hidden">
+        <Card className="border-amber-500/50 bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-yellow-500/10 backdrop-blur-md relative">
+          <div className="absolute top-0 right-0 bg-gradient-to-l from-red-500 to-orange-500 text-white px-6 py-2 rounded-bl-2xl animate-pulse">
+            <div className="flex items-center gap-2">
+              <Timer className="h-4 w-4" />
+              <span className="text-xs font-bold">OFERTA LIMITADA!</span>
             </div>
           </div>
-
-          <div className="space-y-4">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-yellow-600 mb-2">
-                R$ 39,99
+          
+          <CardHeader className="text-center pb-4">
+            <div className="mx-auto w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mb-4 animate-pulse">
+              <Crown className="h-8 w-8 text-amber-500" />
+            </div>
+            <CardTitle className="text-2xl text-amber-600 flex items-center justify-center gap-2">
+              <Lock className="h-6 w-6" />
+              Plataforma Desktop Premium
+            </CardTitle>
+            <CardDescription className="text-lg">
+              Tenha acesso completo à versão desktop com todas as funcionalidades profissionais
+            </CardDescription>
+          </CardHeader>
+          
+          <CardContent className="space-y-6">
+            {/* Pricing Highlight */}
+            <div className="text-center bg-card/60 rounded-2xl p-6 border border-amber-500/30">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="h-5 w-5 text-yellow-500 fill-current" />
+                ))}
+                <span className="text-sm text-muted-foreground ml-2">(12.847+ usuários satisfeitos)</span>
               </div>
-              <div className="text-lg text-green-400 font-semibold">
-                🎉 Pagamento Único - Acesso Vitalício
+              
+              <div className="space-y-3">
+                <div className="text-4xl font-bold text-amber-600">
+                  R$ 39,99
+                </div>
+                <div className="text-lg text-green-400 font-semibold flex items-center justify-center gap-2">
+                  <Gift className="h-5 w-5" />
+                  Pagamento Único - Acesso Vitalício
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  <span className="line-through text-red-400">De R$ 297,99</span>
+                  <span className="text-green-400 font-bold ml-2">• Economia de R$ 258,00!</span>
+                </div>
               </div>
-              <p className="text-sm text-muted-foreground mt-2">
-                Sem mensalidades! Pague uma vez e tenha acesso para sempre
-              </p>
             </div>
 
+            {/* Premium Features Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {[
+                { icon: Shield, text: "100% Sem Anúncios", color: "text-green-400" },
+                { icon: Download, text: "Downloads Ilimitados", color: "text-blue-400" },
+                { icon: Zap, text: "Assistente IA Premium", color: "text-purple-400" },
+                { icon: Crown, text: "Plataforma Completa", color: "text-amber-400" },
+                { icon: User, text: "Suporte Prioritário", color: "text-cyan-400" },
+                { icon: CheckCircle, text: "Acesso Vitalício", color: "text-emerald-400" },
+              ].map((feature, index) => (
+                <div key={index} className="flex items-center gap-2 p-3 bg-card/40 rounded-xl border border-border/50">
+                  <feature.icon className={`w-4 h-4 ${feature.color}`} />
+                  <span className="text-sm font-medium">{feature.text}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
             <Button 
               onClick={handlePremiumUpgrade}
-              className="w-full h-16 text-lg font-bold bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 hover:from-yellow-600 hover:via-orange-600 hover:to-yellow-700 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-2xl"
+              className="w-full h-16 text-lg font-bold bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:via-orange-600 hover:to-amber-700 transition-all duration-500 transform hover:scale-105 shadow-xl hover:shadow-2xl"
             >
               <Crown className="w-6 h-6 mr-3" />
-              Upgrade para Premium - R$ 39,99
+              🔥 QUERO MEU ACESSO PREMIUM - R$ 39,99
+              <ArrowRight className="w-6 h-6 ml-3" />
             </Button>
-          </div>
-        </CardContent>
-      </Card>
+            
+            <div className="text-center">
+              <p className="text-xs text-muted-foreground">
+                ⚡ Ativação imediata • 🔒 Pagamento seguro • ✅ Garantia de satisfação
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
 
-      {/* Formulário desabilitado */}
-      <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-2xl opacity-60">
-        <CardHeader className="text-center pb-6 py-[12px]">
-          <CardTitle className="gradient-text-legal text-3xl sm:text-4xl mb-4 opacity-50">
+      {/* Formulário com Visual Premium Lock */}
+      <Card className="border-0 bg-card/30 backdrop-blur-sm shadow-2xl relative overflow-hidden">
+        {/* Premium Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-transparent pointer-events-none z-10"></div>
+        <div className="absolute top-4 right-4 z-20">
+          <div className="bg-amber-500/90 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 animate-pulse">
+            <Crown className="w-4 h-4" />
+            PREMIUM
+          </div>
+        </div>
+
+        <CardHeader className="text-center pb-6 py-[12px] relative z-10">
+          <CardTitle className="gradient-text-legal text-3xl sm:text-4xl mb-4">
             Acesse a Versão Desktop Completa
           </CardTitle>
-          <CardDescription className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-muted-foreground opacity-50">
+          <CardDescription className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed text-muted-foreground">
             Preencha os dados abaixo e receba o <strong className="text-primary">link da plataforma desktop</strong> diretamente no seu email. 
             Acesso completo a todas as funcionalidades profissionais!
           </CardDescription>
-          
-          {/* Banner explicativo */}
-          <div className="mt-6 p-4 bg-red-500/10 backdrop-blur-sm rounded-xl border border-red-500/20">
-            <p className="text-sm font-medium text-red-400 flex items-center justify-center gap-2">
-              <Lock className="w-4 h-4" />
-              Disponível apenas para usuários Premium
-            </p>
-          </div>
         </CardHeader>
         
-        <CardContent>
+        <CardContent className="relative z-10">
           <Form {...form}>
             <form className="space-y-8">
               <div className="grid sm:grid-cols-2 gap-6">
@@ -241,18 +247,22 @@ export const PlataformaDesktop = () => {
                   control={form.control} 
                   name="nome" 
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base opacity-50">
+                    <FormItem className="relative">
+                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base">
                         <User className="w-5 h-5 text-primary" />
                         Nome Completo
+                        <Lock className="w-4 h-4 text-amber-500 ml-auto" />
                       </FormLabel>
                       <FormControl>
-                        <Input 
-                          placeholder="Digite seu nome completo" 
-                          {...field} 
-                          className="h-14 text-base bg-background/30 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" 
-                          disabled={true}
-                        />
+                        <div className="relative">
+                          <Input 
+                            placeholder="Digite seu nome completo" 
+                            {...field} 
+                            className="h-14 text-base bg-background/50 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" 
+                            disabled={true}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent rounded-md pointer-events-none"></div>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -263,19 +273,23 @@ export const PlataformaDesktop = () => {
                   control={form.control} 
                   name="email" 
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base opacity-50">
+                    <FormItem className="relative">
+                      <FormLabel className="text-foreground font-semibold flex items-center gap-2 text-base">
                         <Mail className="w-5 h-5 text-primary" />
                         E-mail para receber o link
+                        <Lock className="w-4 h-4 text-amber-500 ml-auto" />
                       </FormLabel>
                       <FormControl>
-                        <Input 
-                          type="email" 
-                          placeholder="Digite seu melhor e-mail" 
-                          {...field} 
-                          className="h-14 text-base bg-background/30 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" 
-                          disabled={true}
-                        />
+                        <div className="relative">
+                          <Input 
+                            type="email" 
+                            placeholder="Digite seu melhor e-mail" 
+                            {...field} 
+                            className="h-14 text-base bg-background/50 backdrop-blur-sm border-border focus:border-primary transition-all duration-300" 
+                            disabled={true}
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent rounded-md pointer-events-none"></div>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -286,25 +300,41 @@ export const PlataformaDesktop = () => {
               <div className="relative">
                 <Button 
                   type="button" 
-                  className="w-full h-16 text-lg font-bold bg-gray-500/50 cursor-not-allowed opacity-50" 
+                  className="w-full h-16 text-lg font-bold bg-gradient-to-r from-gray-600/50 to-gray-700/50 cursor-not-allowed opacity-70 relative overflow-hidden" 
                   disabled={true}
                 >
+                  <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-transparent"></div>
                   <Lock className="w-6 h-6 mr-3" />
-                  Premium Necessário para Download
+                  🔒 Desbloqueie com Premium - R$ 39,99
+                  <Crown className="w-6 h-6 ml-3" />
                 </Button>
-                <div className="absolute inset-0 bg-black/20 rounded-md pointer-events-none" />
               </div>
             </form>
           </Form>
 
-          <div className="mt-8 p-6 bg-red-500/10 backdrop-blur-sm rounded-xl border border-red-500/20">
-            <div className="text-center space-y-2">
-              <p className="text-sm text-red-400 font-medium">
-                🔒 Funcionalidade Premium
+          {/* Premium Unlock Section */}
+          <div className="mt-8 p-6 bg-gradient-to-r from-amber-500/10 to-orange-500/10 backdrop-blur-sm rounded-xl border border-amber-500/30">
+            <div className="text-center space-y-4">
+              <div className="flex items-center justify-center gap-2">
+                <Crown className="w-6 h-6 text-amber-500" />
+                <h3 className="text-lg font-bold text-amber-600">
+                  Desbloqueie Agora por Apenas R$ 39,99
+                </h3>
+              </div>
+              
+              <p className="text-sm text-muted-foreground max-w-md mx-auto">
+                Upgrade para Premium e tenha acesso imediato à plataforma desktop completa, 
+                sem anúncios e com todas as funcionalidades profissionais.
               </p>
-              <p className="text-sm text-muted-foreground">
-                Upgrade para Premium e tenha acesso à plataforma desktop completa
-              </p>
+              
+              <Button 
+                onClick={handlePremiumUpgrade}
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold px-8 py-3 rounded-xl transform hover:scale-105 transition-all duration-300 shadow-lg"
+              >
+                <Crown className="w-5 h-5 mr-2" />
+                Fazer Upgrade Agora
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
             </div>
           </div>
         </CardContent>
